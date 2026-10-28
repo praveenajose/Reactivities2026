@@ -11,8 +11,6 @@ type Props = {
   editMode: boolean;
   onFormOpen: (id?: string) => void;
   onFormClose: () => void;
-  onSubmitForm: (activity: Activity) => void;
-  onDeleteActivity: (id: string) => void;
 };
 
 export default function AcxtivityDashboard({
@@ -23,8 +21,6 @@ export default function AcxtivityDashboard({
   editMode,
   onFormOpen,
   onFormClose,
-  onSubmitForm,
-  onDeleteActivity,
 }: Props) {
   return (
     <Grid container spacing={3}>
@@ -32,23 +28,18 @@ export default function AcxtivityDashboard({
         <ActivityList
           activities={activities}
           onSelectActivity={onSelectActivity}
-          onDeleteActivity={onDeleteActivity}
         />
       </Grid>
       <Grid size={5}>
         {selectedActivity && !editMode && (
           <ActivityDetails
-            activity={selectedActivity}
+            selectedActivity={selectedActivity}
             onCancelSelectActivity={onCancelSelectActivity}
             onFormOpen={onFormOpen}
           />
         )}
         {editMode && (
-          <ActivityForm
-            onFormClose={onFormClose}
-            activity={selectedActivity}
-            onSubmit={onSubmitForm}
-          />
+          <ActivityForm onFormClose={onFormClose} activity={selectedActivity} />
         )}
       </Grid>
     </Grid>
