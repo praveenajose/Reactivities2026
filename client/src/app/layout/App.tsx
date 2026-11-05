@@ -1,20 +1,19 @@
-import { useState } from "react";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import { Box, Container, CssBaseline, Typography } from "@mui/material";
+import { Box, Container, CssBaseline } from "@mui/material";
 import NavBar from "./NavBar";
 import AcxtivityDashboard from "../../features/activities/dashboard/AcxtivityDashboard";
-import { useActivities } from "../../lib/hooks/useActivities";
+import { Outlet } from "react-router";
 
 function App() {
-  const [selectedActivity, setSelectedActivity] = useState<
-    Activity | undefined
-  >(undefined);
-  const [editMode, setEditMode] = useState(false);
+  // const [selectedActivity, setSelectedActivity] = useState<
+  //   Activity | undefined
+  // >(undefined);
+  // const [editMode, setEditMode] = useState(false);
 
-  const { activities, isPending, error } = useActivities();
+  // const { activities, isPending, error } = useActivities();
 
   // useEffect(() => {
   //   axios
@@ -26,26 +25,26 @@ function App() {
   //   return () => {};
   // }, []);
 
-  const handleSelectActivity = (id: string) => {
-    setSelectedActivity(activities!.find((x) => x.id === id));
-  };
+  // const handleSelectActivity = (id: string) => {
+  //   setSelectedActivity(activities!.find((x) => x.id === id));
+  // };
 
-  const handleCancelSelectActivity = () => {
-    setSelectedActivity(undefined);
-  };
+  // const handleCancelSelectActivity = () => {
+  //   setSelectedActivity(undefined);
+  // };
 
-  const handleFormOpen = (id?: string) => {
-    if (id) {
-      handleSelectActivity(id);
-    } else {
-      handleCancelSelectActivity();
-    }
-    setEditMode(true);
-  };
+  // const handleFormOpen = (id?: string) => {
+  //   if (id) {
+  //     handleSelectActivity(id);
+  //   } else {
+  //     handleCancelSelectActivity();
+  //   }
+  //   setEditMode(true);
+  // };
 
-  const handleFormClose = () => {
-    setEditMode(false);
-  };
+  // const handleFormClose = () => {
+  //   setEditMode(false);
+  // };
 
   // const handleSubmitForm = (activity: Activity) => {
   //   // if (activity.id) {
@@ -76,23 +75,9 @@ function App() {
   return (
     <Box sx={{ bgcolor: "#eeeeee", minHeight: "100vh" }}>
       <CssBaseline />
-      <NavBar openForm={handleFormOpen} />
+      <NavBar />
       <Container maxWidth="xl" sx={{ mt: 3 }}>
-        {error ? (
-          <Typography color="error">Error: {error.message}</Typography>
-        ) : !activities || isPending ? (
-          <Typography>Loading...</Typography>
-        ) : (
-          <AcxtivityDashboard
-            activities={activities}
-            selectedActivity={selectedActivity}
-            onSelectActivity={handleSelectActivity}
-            onCancelSelectActivity={handleCancelSelectActivity}
-            editMode={editMode}
-            onFormOpen={handleFormOpen}
-            onFormClose={handleFormClose}
-          />
-        )}
+        <Outlet />
       </Container>
     </Box>
   );

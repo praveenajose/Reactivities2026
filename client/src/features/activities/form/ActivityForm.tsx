@@ -1,16 +1,15 @@
 import { Box, Paper, TextField, Typography, Button } from "@mui/material";
 import { useActivities } from "../../../lib/hooks/useActivities";
+import { useNavigate, useParams } from "react-router";
 
 const today = new Date().toISOString().split("T")[0];
 
-type Props = {
-  activity?: Activity;
-  onFormClose: () => void;
-};
-
-export default function ActivityForm({ activity, onFormClose }: Props) {
+export default function ActivityForm() {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   // Use the useActivities hook to access the updateActivity mutation
-  const { createActivity, updateActivity } = useActivities();
+  const { createActivity, updateActivity, activity, isActivityLoading } =
+    useActivities(id);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,16 +26,22 @@ export default function ActivityForm({ activity, onFormClose }: Props) {
     if (activity) {
       data.id = activity.id;
       await updateActivity.mutateAsync(data as unknown as Activity); // Call the updateActivity mutation
-      onFormClose(); // Close the form after successful submission
+      navigate(`/activities/${activity.id}`); // Navigate to the activity details page after updating
     } else {
-      await createActivity.mutateAsync(data as unknown as Activity);
-      onFormClose();
+      createActivity.mutateAsync(data as unknown as Activity, {
+        onSuccess: (id) => {
+          navigate(`/activities/${id}`); // Navigate to the activity details page after creating
+        },
+      }); // Call the createActivity mutation
     }
   };
+
+  if (isActivityLoading) return <Typography>Loading...</Typography>;
+
   return (
     <Paper sx={{ borderRadius: 3, p: 3 }}>
       <Typography variant="h5" gutterBottom color="primary" sx={{ pb: 1 }}>
-        {activity?.id ? "Update Activity" : "Create Activity"}
+        {activity?.id ? "Edit Activity" : "Create Activity"}
       </Typography>
       <Box
         component="form"
@@ -93,7 +98,7 @@ export default function ActivityForm({ activity, onFormClose }: Props) {
           defaultValue={activity?.venue}
         />
         <Box sx={{ display: "flex", justifyContent: "end", gap: 3 }}>
-          <Button onClick={onFormClose} color="inherit">
+          <Button color="inherit" onClick={() => navigate("/activities")}>
             Cancel
           </Button>
           <Button

@@ -1,18 +1,9 @@
 import Group from "@mui/icons-material/Group";
-import {
-  Box,
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Container,
-} from "@mui/material";
+import { Box, AppBar, Toolbar, Typography, Container } from "@mui/material";
+import { NavLink } from "react-router";
+import MenuItemLink from "../shared/components/MenuItemLink";
 
-type Props = {
-  openForm: () => void;
-};
-
-export default function NavBar({ openForm }: Props) {
+export default function NavBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -25,7 +16,16 @@ export default function NavBar({ openForm }: Props) {
         <Container maxWidth="xl">
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
             <Box>
-              <Container sx={{ display: "flex", gap: 2 }}>
+              <Container
+                component={NavLink}
+                to="/"
+                sx={{
+                  display: "flex",
+                  gap: 2,
+                  color: "inherit",
+                  textDecoration: "none",
+                }}
+              >
                 <Group fontSize="large" />
                 <Typography
                   variant="h4"
@@ -37,54 +37,16 @@ export default function NavBar({ openForm }: Props) {
               </Container>
             </Box>
             <Box sx={{ display: "flex" }}>
-              <Container>
-                <Typography
-                  variant="h6"
-                  color="inherit"
-                  sx={{
-                    fontsize: "1.25rem",
-                    textTransform: "uppercase",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Activities
-                </Typography>
-              </Container>
-              <Container>
-                <Typography
-                  variant="h6"
-                  color="inherit"
-                  sx={{
-                    fontsize: "1.25rem",
-                    textTransform: "uppercase",
-                    fontWeight: "bold",
-                  }}
-                >
-                  About
-                </Typography>
-              </Container>
-              <Container>
-                <Typography
-                  variant="h6"
-                  color="inherit"
-                  sx={{
-                    fontsize: "1.25rem",
-                    textTransform: "uppercase",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Contact
-                </Typography>
-              </Container>
+              <Box>
+                <MenuItemLink to="/activities">Activities</MenuItemLink>
+              </Box>
+              <Box>
+                <MenuItemLink to="/createActivity">
+                  Create Activity
+                </MenuItemLink>
+              </Box>
             </Box>
-            <Button
-              size="large"
-              variant="contained"
-              color="warning"
-              onClick={openForm}
-            >
-              Create Activity
-            </Button>
+            User Menu
           </Toolbar>
         </Container>
       </AppBar>

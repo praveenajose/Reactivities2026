@@ -11,10 +11,9 @@ import { useActivities } from "../../../lib/hooks/useActivities";
 
 type Props = {
   activity: Activity;
-  onSelectActivity: (id: string) => void;
 };
 
-export default function ActivityCard({ activity, onSelectActivity }: Props) {
+export default function ActivityCard({ activity }: Props) {
   const { deleteActivity } = useActivities();
 
   return (
@@ -37,7 +36,8 @@ export default function ActivityCard({ activity, onSelectActivity }: Props) {
           <Button
             size="medium"
             variant="contained"
-            onClick={() => onSelectActivity(activity.id)}
+            component="a"
+            href={`/activities/${activity.id}`}
           >
             View
           </Button>

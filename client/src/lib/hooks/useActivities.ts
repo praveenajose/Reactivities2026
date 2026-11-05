@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import agent from "../api/agent";
 
-export const useActivities = () => {
+export const useActivities = (id?: string) => {
   const queryClient = useQueryClient();
 
   const {
@@ -16,6 +16,18 @@ export const useActivities = () => {
       if (response.status !== 200) throw new Error("Failed to fetch repo data");
       return response.data;
     },
+  });
+
+  const { data: activity, isLoading: isActivityLoading } = useQuery({
+    queryKey: ["activity", id],
+    queryFn: async () => {
+      const response = await agent.get<Activity>(`/activities/${id}`);
+      if (response.status === 404) throw new Error("Activity not found");
+      if (response.status !== 200)
+        throw new Error("Failed to fetch activity data");
+      return response.data;
+    },
+    enabled: !!id, // Only run this query if an id is provided
   });
 
   const updateActivity = useMutation({
@@ -56,5 +68,7 @@ export const useActivities = () => {
     createActivity,
     updateActivity,
     deleteActivity,
+    activity,
+    isActivityLoading,
   };
 };
