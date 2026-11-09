@@ -4,6 +4,7 @@ import HomePage from "../../features/home/HomePage";
 import AcxtivityDashboard from "../../features/activities/dashboard/AcxtivityDashboard";
 import ActivityForm from "../../features/activities/form/ActivityForm";
 import ActivityDetailsPage from "../../features/activities/details/ActivityDetailsPage";
+import Counter from "../../features/counter/Counter";
 
 export const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ export const router = createBrowserRouter([
       { path: "activities/:id", element: <ActivityDetailsPage /> },
       { path: "createActivity", element: <ActivityForm key="create" /> }, // use a unique key to force remounting when navigating to the create activity form
       { path: "manage/:id", element: <ActivityForm key="update" /> },
+      { path: "counter", element: <Counter /> },
     ],
   },
 ]);

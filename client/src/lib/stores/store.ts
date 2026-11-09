@@ -1,0 +1,15 @@
+import React from "react";
+import CounterStore from "./counterStores";
+import { UiStore } from "./uiStore";
+
+interface Store {
+  counterStore: CounterStore;
+  uiStore: UiStore;
+}
+
+export const store: Store = {
+  counterStore: new CounterStore(),
+  uiStore: new UiStore(),
+};
+
+export const StoreContext = React.createContext(store);
