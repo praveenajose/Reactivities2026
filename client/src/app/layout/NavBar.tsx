@@ -59,6 +59,9 @@ export default function NavBar() {
               <Box>
                 <MenuItemLink to="/counter">Counter</MenuItemLink>
               </Box>
+              <Box>
+                <MenuItemLink to="/errors">Errors</MenuItemLink>
+              </Box>
             </Box>
             User Menu
           </Toolbar>

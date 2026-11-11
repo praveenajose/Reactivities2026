@@ -1,1 +1,11 @@
-{}
+{
+  "[csharp]": {
+    "editor.quickSuggestions": {
+      "comments": false,
+      "other": true,
+      "strings": false
+    },
+    "editor.suggestOnTriggerCharacters": true,
+    "editor.parameterHints.enabled": true
+  }
+}
